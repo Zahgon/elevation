@@ -30,16 +30,4 @@ except ImportError:
 
 def import_bounds(reference):
     # ASSUMPTION: rasterio and fiona bounds are given in geodetic WGS84 crs
-    if SUPPORT_RASTER_DATA:
-        try:
-            with rasterio.open(reference) as datasource:
-                return datasource.bounds
-        except rasterio.errors.RasterioIOError:
-            pass
-    if SUPPORT_VECTOR_DATA:
-        try:
-            with fiona.open(reference) as datasource:
-                return datasource.bounds
-        except fiona.errors.FionaValueError:
-            pass
-    raise RuntimeError("Reference datasource could not be opened %r." % reference)
+    pass

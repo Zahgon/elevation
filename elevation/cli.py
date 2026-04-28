@@ -51,31 +51,26 @@ def eio(**kwargs):
 
 @eio.command(short_help="Audit the system for common issues.")
 def selfcheck():
-    print(util.selfcheck(tools=elevation.TOOLS))
+    pass
 
 
 def click_merge_parent_params(wrapped):
     @click.pass_context
     @functools.wraps(wrapped)
-    def wrapper(ctx, **kwargs):
-        if ctx.parent and ctx.parent.params:
-            kwargs.update(ctx.parent.params)
-        return wrapped(**kwargs)
-
-    return wrapper
+    pass
 
 
 @eio.command(short_help="Show info about the product cache.")
 @click_merge_parent_params
 def info(**kwargs):
-    elevation.info(**kwargs)
+    pass
 
 
 @eio.command(short_help="Seed the DEM to given bounds.")
 @click.option('--bounds', nargs=4, type=float, help="Output bounds: left bottom right top.")
 @click_merge_parent_params
 def seed(**kwargs):
-    elevation.seed(**kwargs)
+    pass
 
 
 @eio.command(short_help="Clip the DEM to given bounds.")
@@ -100,20 +95,16 @@ def seed(**kwargs):
 )
 @click_merge_parent_params
 def clip(bounds, reference, **kwargs):
-    if not bounds and not reference:
-        raise click.BadOptionUsage("One of --bounds or --reference must be supplied.")
-    if not bounds:
-        bounds = spatial.import_bounds(reference)
-    elevation.clip(bounds, **kwargs)
+    pass
 
 
 @eio.command(short_help="Clean up the product cache from temporary files.")
 @click_merge_parent_params
 def clean(**kwargs):
-    elevation.clean(**kwargs)
+    pass
 
 
 @eio.command(short_help="Remove the product cache entirely.")
 @click_merge_parent_params
 def distclean(**kwargs):
-    elevation.distclean(**kwargs)
+    pass

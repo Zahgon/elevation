@@ -29,61 +29,22 @@ def selfcheck(tools):
 
     :param tools: Tools description. Use elevation.TOOLS to test elevation.
     """
-    msg = []
-    for tool_name, check_cli in collections.OrderedDict(tools).items():
-        try:
-            subprocess.check_output(check_cli, shell=True, stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError:
-            msg.append('%r not found or not usable.' % tool_name)
-    return '\n'.join(msg) if msg else 'Your system is ready.'
+    pass
 
 
 @contextmanager
 def lock_tiles(datasource_root, tile_names):
-    locks = []
-    for tile_name in tile_names:
-        lockfile_name = os.path.join(datasource_root, 'cache', tile_name + '.lock')
-        locks.append(fasteners.InterProcessLock(lockfile_name))
-
-    for lock in locks:
-        lock.acquire(blocking=True)
-
-    yield
-
-    for lock in locks:
-        lock.release()
+    pass
 
 
 @contextmanager
 def lock_vrt(datasource_root, product):
-    with fasteners.InterProcessLock(os.path.join(datasource_root, product + '.vrt.lock')):
-        yield
+    pass
 
 
 def ensure_setup(root, folders=(), file_templates=(), force=False, **kwargs):
-    with fasteners.InterProcessLock(os.path.join(root, FOLDER_LOCKFILE_NAME)):
-        created_folders = []
-        for path in [root] + [os.path.join(root, p) for p in folders]:
-            if not os.path.exists(path):
-                os.makedirs(path)
-                created_folders.append(path)
-
-        created_files = collections.OrderedDict()
-        for relpath, template in collections.OrderedDict(file_templates).items():
-            path = os.path.join(root, relpath)
-            if force or not os.path.exists(path):
-                body = template.format(**kwargs)
-                with open(path, 'w') as file:
-                    file.write(body)
-                created_files[path] = body
-
-    return created_folders, created_files
+    pass
 
 
 def check_call_make(path, targets=(), variables=()):
-    make_targets = ' '.join(targets)
-    variables_items = collections.OrderedDict(variables).items()
-    make_variables = ' '.join('%s="%s"' % (k.upper(), v) for k, v in variables_items)
-    cmd = 'make -C {path} {make_targets} {make_variables}'.format(**locals())
-    subprocess.check_call(cmd, shell=True)
-    return cmd
+    pass
